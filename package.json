@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "description": "A template to get you started using Phaser with Browserify!",
   "scripts": {
-    "start": "beefy src/game.js:bundle.js --live --open"
+    "start": "beefy src/game.js:bundle.js --live --open",
+    "bundle": "browserify src/game.js -o bundle.js "
   },
   "dependencies": {
     "beefy": "~2.1.1",
     "browserify": "~7.0.0",
     "browserify-fs": "^1.0.0",
+    "mixin-object": "^0.1.1",
     "phaser": "~2.2.1"
   },
   "devDependencies": {},

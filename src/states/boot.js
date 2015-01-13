@@ -12,6 +12,7 @@ module.exports = {
     },
 
     create: function () {
+        game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         game.state.start('load');
     }
 };

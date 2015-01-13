@@ -18,7 +18,7 @@ module.exports = {
         this.loadingLabel();
         //Add here all the assets that you need to game.load
         game.load.image('badguy', 'assets/badguy.png');
-        game.load.image('player', 'assets/char.png');
+        game.load.spritesheet('player', 'assets/player-sprites.png', 16,16);
         game.load.image('blackbrick', 'assets/blackbrick.png');
         game.load.image('bluebrick', 'assets/bluebrick.png');
         game.load.image('redbrick', 'assets/redbrick.png');
@@ -29,6 +29,7 @@ module.exports = {
         game.load.image('lazer', 'assets/lazer_bolt.png');
         game.load.spritesheet('button', 'assets/buttons.png', 248, 64);
         game.load.text('level-1', 'levels/level-1.txt');
+        game.load.text('level-2', 'levels/level-2.txt');
     },
 
     create: function () {
