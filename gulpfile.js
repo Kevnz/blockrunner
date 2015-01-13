@@ -46,7 +46,7 @@ gulp.task('phaser',  function () {
     .pipe(gulp.dest('dist/node_modules/phaser/build/'));
 });
 gulp.task('dist', ['build','assets','levels','plugins','phaser'], function () {
-	return gulp.src(['./*.png', './bundle.js', './index.html'])
+	return gulp.src(['./*.png', './bundle.js', './index.html', './gamecontroller.js'])
     .pipe(gulp.dest('dist'));
 });
 
