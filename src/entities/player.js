@@ -52,9 +52,7 @@ var Player = function (game) {
                             }
                         }
                         if (x < y) {
-                            self.sprite.body.velocity.y = (-1*lessThanY) * playerSpeed;;
-                             
-                            //this.sprite.animations.play('down');
+                            self.sprite.body.velocity.y = (-1*lessThanY) * playerSpeed;
 
                             if (lessThanY < 0) {
                                 self.sprite.animations.play('down'); 
@@ -89,9 +87,6 @@ var Player = function (game) {
                         if (x < y) {
                             self.fireBullet('y', (-1*lessThanY)*bulletSpeed);
                         }
-                        //determine if x or y is greater
-
-                        //determine if is pos or negative
                    }
                }
             }

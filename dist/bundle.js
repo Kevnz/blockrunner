@@ -28,7 +28,7 @@ game.state.start('boot');
 var bulletTime = 0;
 var playerSpeed =  50;
 var bulletSpeed =  160;
-
+var cursors;
 function hasTouch() {
     return (('ontouchstart' in window) ||       // html5 browsers
             (navigator.maxTouchPoints > 0) ||   // future IE
@@ -127,7 +127,7 @@ var Player = function (game) {
     this.pad = game.input.gamepad.pad1;
 
     this.bulletTime = 0;
-    this.cursors = game.input.keyboard.createCursorKeys();
+    cursors = game.input.keyboard.createCursorKeys();
 }
 
 Player.prototype = Object.create({
@@ -159,13 +159,13 @@ Player.prototype = Object.create({
             this.sprite.body.velocity.y = 0;
         }
 
-        if(this.cursors.left.isDown) {
+        if(cursors.left.isDown) {
             this.sprite.body.velocity.x = -200;
-        } else if(this.cursors.right.isDown) {
+        } else if(cursors.right.isDown) {
             this.sprite.body.velocity.x = 200;
-        } else if(this.cursors.up.isDown) {
+        } else if(cursors.up.isDown) {
             this.sprite.body.velocity.y = -200;
-        } else if(this.cursors.down.isDown) {
+        } else if(cursors.down.isDown) {
             this.sprite.body.velocity.y = 200;
         }
 
@@ -318,7 +318,6 @@ module.exports = {
 var player;
 var blocks;
 var enemies;
-var cursors;
 var gates;
 var pad;
 var bullets;
@@ -493,7 +492,7 @@ module.exports = {
     		map.push(newRow);
     	});
 
-    	cursors = game.input.keyboard.createCursorKeys();
+
 
 
   		var walkables = [0];
