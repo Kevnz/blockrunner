@@ -428,7 +428,7 @@ var hunt =  function huntingSeason (badguy) {
     if (difX < 6 && difY < 6) {
         moveTo(badguy, player.sprite);
     } else {
-        moveTo(badguy, { x: (baddieXY.x + 3)*16 , y: (baddieXY.y + 3)*16});
+        //moveTo(badguy, { x: (baddieXY.x + 3)*16 , y: (baddieXY.y + 3)*16});
     }
     
  
