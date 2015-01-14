@@ -153,7 +153,7 @@ module.exports = {
     	var l1 = game.cache.getText(game.globals.LEVEL);
 
     	var rows = l1.split('\r\n'); 
-        if (rows.length === 0) {
+        if (rows.length === 1) {
             rows = l1.split('\n'); 
         }
 		map = [];
