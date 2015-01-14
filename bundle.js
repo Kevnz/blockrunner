@@ -470,6 +470,9 @@ module.exports = {
     	var l1 = game.cache.getText(game.globals.LEVEL);
 
     	var rows = l1.split('\r\n'); 
+        if (rows.length === 0) {
+            rows = l1.split('\n'); 
+        }
 		map = [];
     	rows.forEach(function (row, index) {
     		var newRow = [];
