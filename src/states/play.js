@@ -1,7 +1,6 @@
 var player;
 var blocks;
 var enemies;
-var cursors;
 var gates;
 var pad;
 var bullets;
@@ -176,7 +175,7 @@ module.exports = {
     		map.push(newRow);
     	});
 
-    	cursors = game.input.keyboard.createCursorKeys();
+
 
 
   		var walkables = [0];
