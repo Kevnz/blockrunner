@@ -360,15 +360,19 @@ var blasted = function  (bullet, badguy) {
     //explosion.play('explode', 30, false, true);
 };
  
- 
+var getGridXY = function (actor) {
+        var actX = (actor.x/game.globals.TILE_SIZE).toFixed();
+        var actY = (actor.y/game.globals.TILE_SIZE).toFixed();
+    return { x:actX, y:actY };
+}
 var moveTo = function (actor, target) {
 
 
     var actX = (actor.x/game.globals.TILE_SIZE).toFixed();
 		var actY = (actor.y/game.globals.TILE_SIZE).toFixed();
 
-    var playX = (player.sprite.x/game.globals.TILE_SIZE).toFixed();
-		var playY = (player.sprite.y/game.globals.TILE_SIZE).toFixed()
+    var playX = (target.x/game.globals.TILE_SIZE).toFixed();
+	var playY = (target.y/game.globals.TILE_SIZE).toFixed()
 
 
 		findPathTo(actor, actX, actY, playX, playY); 
@@ -413,7 +417,20 @@ var findPathTo =  function pathTastic (actor, startx, starty, tilex, tiley) {
 
 var hunt =  function huntingSeason (badguy) {
 
-    moveTo(badguy, player.sprite);
+    var baddieXY = getGridXY(badguy)
+    var playerXY = getGridXY(player.sprite);
+
+    var difX = playerXY.x - baddieXY.x;
+    var difY = playerXY.y - baddieXY.y;
+
+
+    //if badguy in the detection zone move towards player, otherwise pick a point and "patrol"
+    if (difX < 6 && difY < 6) {
+        moveTo(badguy, player.sprite);
+    } else {
+        moveTo(badguy, { x: (baddieXY.x + 3)*16 , y: (baddieXY.y + 3)*16});
+    }
+    
  
  
  
