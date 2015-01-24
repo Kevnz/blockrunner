@@ -31,6 +31,9 @@ module.exports = {
         game.load.image('powerup', 'assets/power.png');
         game.load.image('player-life', 'assets/player-middle.png');
         game.load.spritesheet('button', 'assets/buttons.png', 248, 64);
+        game.load.bitmapFont('bits-0', 'assets/fonts/bits0.png', 'assets/fonts/bits0.fnt');
+        game.load.bitmapFont('bits-1', 'assets/fonts/bits1.png', 'assets/fonts/bits1.fnt');
+        game.load.bitmapFont('bits-2', 'assets/fonts/bits2.png', 'assets/fonts/bits2.fnt');
         game.load.text('level-1', 'levels/level-1.txt');
         game.load.text('level-2', 'levels/level-2.txt');
     },
