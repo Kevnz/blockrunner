@@ -1,7 +1,9 @@
 var bulletTime = 0;
 var playerSpeed =  50;
 var bulletSpeed =  160;
-var cursors;
+var cursors; 
+var EventEmitter2 = require('eventemitter2').EventEmitter2;
+
 function hasTouch() {
     return (('ontouchstart' in window) ||       // html5 browsers
             (navigator.maxTouchPoints > 0) ||   // future IE
@@ -9,8 +11,14 @@ function hasTouch() {
 }
 
 var Player = function (game) {
+
     var self = this;
+    this.eventstore = new EventEmitter2({ 
+
+    });
+    console.log(this.eventstore);
 	this.game = game;
+    this.lives = 3;
 
 	this.sprite = game.add.sprite(game.world.centerX, game.world.centerY, 'player');
 	this.sprite.name = 'player-dude';
@@ -21,7 +29,11 @@ var Player = function (game) {
 	game.physics.enable(this.sprite, Phaser.Physics.ARCADE);  
 
     game.input.gamepad.start();
-
+    this.lifeIndicators = []; 
+    this.lifeIndicators.push( game.add.sprite((game.globals.WIDTH *game.globals.TILE_SIZE)-16, 0, 'player-life')); 
+    this.lifeIndicators.push( game.add.sprite((game.globals.WIDTH *game.globals.TILE_SIZE)-32, 0, 'player-life'));
+    //game.bringToTop(this._life2);
+    //game.bringToTop(this._life1);
     if (hasTouch()) {
         GameController.init( {
             left: {
@@ -103,6 +115,9 @@ Player.prototype = Object.create({
     setBullets: function (bullets) {
         this.bullets = bullets;
     },
+    on: function (event, callback) {
+        this.eventstore.on(event, callback);
+    },
     fireBullet: function  (dir, speed) { 
 
         //  To avoid them being allowed to fire too fast we set a time limit
@@ -121,6 +136,39 @@ Player.prototype = Object.create({
 	create: function () {
 
 	},
+    respawn: function () {
+        this.sprite.x = game.world.centerX;
+        this.sprite.y = game.world.centerY;
+        this.respawning = true; 
+        console.log('respawning');
+        var flash = game.add.tween(this.sprite)
+        flash.to( { alpha: 0 }, 200, Phaser.Easing.Linear.None, true, 0, 2, true);
+        flash.onComplete.add(function () { 
+            this.respawning = false;
+            console.log('this is onComplete');
+        }, this);
+        flash.onStart.add(function () {
+            console.log('start up');
+        })
+  
+        console.log('started the flash');
+    },    
+    die: function () {
+        this.lives--;
+        if (this.lives > 0) {
+            var ind = this.lifeIndicators.pop();
+            ind.kill();
+            this.respawn();
+        } else {
+            this.eventstore.emit('died'); 
+            this.sprite.kill();
+        }
+
+        
+
+
+    },
+
 	update : function () {
         if (!hasTouch()) {
             this.sprite.body.velocity.x = 0;

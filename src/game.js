@@ -11,13 +11,14 @@ game.globals = {
     WIDTH: 32,
     HEIGHT: 16,
     LEVEL: 'level-1',
+    LEVELNUMBER: 1,
     SCORE: 0
 };
 
 
 
-game.state.add('level1', require('./states/play.js'));
-game.state.add('level2', require('./states/play.js'));
+game.state.add('level-1', require('./states/play.js'));
+game.state.add('level-2', require('./states/play.js'));
 game.state.add('load', require('./states/load.js'));
 game.state.add('menu', require('./states/menu.js'));
 game.state.add('boot', require('./states/boot.js'));

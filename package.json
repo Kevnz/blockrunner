@@ -10,11 +10,12 @@
     "beefy": "~2.1.1",
     "browserify": "~7.0.0",
     "browserify-fs": "^1.0.0",
+    "eventemitter2": "^0.4.14",
     "mixin-object": "^0.1.1",
     "phaser": "~2.2.1"
   },
   "devDependencies": {
-    "gulp": "^3.8.10",
+    "gulp": "3.8.8",
     "gulp-gh-pages": "^0.4.0",
     "vinyl-source-stream": "^1.0.0"
   },

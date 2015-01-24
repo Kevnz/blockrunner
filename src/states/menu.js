@@ -3,7 +3,7 @@ var half_button_width = 124;
 var half_button_height = 32;
 var actionOnClick = function () {
 	console.log('click');
-	game.state.start('level1');
+	game.state.start('level-1');
 };
 var pad_clicked = false; 
 

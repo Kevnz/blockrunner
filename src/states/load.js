@@ -27,6 +27,9 @@ module.exports = {
         game.load.image('whitebrick', 'assets/whitebrick.png');
         game.load.image('gate', 'assets/gate.png');
         game.load.image('lazer', 'assets/lazer_bolt.png');
+        game.load.image('person', 'assets/person.png');
+        game.load.image('powerup', 'assets/power.png');
+        game.load.image('player-life', 'assets/player-middle.png');
         game.load.spritesheet('button', 'assets/buttons.png', 248, 64);
         game.load.text('level-1', 'levels/level-1.txt');
         game.load.text('level-2', 'levels/level-2.txt');
