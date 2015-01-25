@@ -11,6 +11,7 @@
     "browserify": "~7.0.0",
     "browserify-fs": "^1.0.0",
     "eventemitter2": "^0.4.14",
+    "minimongo": "^3.2.5",
     "mixin-object": "^0.1.1",
     "phaser": "~2.2.1",
     "treo": "^0.4.1"
