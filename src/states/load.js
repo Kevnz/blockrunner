@@ -36,6 +36,10 @@ module.exports = {
         game.load.bitmapFont('bits-2', 'assets/fonts/bits2.png', 'assets/fonts/bits2.fnt');
         game.load.text('level-1', 'levels/level-1.txt');
         game.load.text('level-2', 'levels/level-2.txt');
+        game.load.text('level-3', 'levels/level-3.txt');
+        game.load.text('level-4', 'levels/level-4.txt');
+        game.load.text('level-5', 'levels/level-5.txt');
+        game.load.text('level-6', 'levels/level-6.txt');
     },
 
     create: function () {
