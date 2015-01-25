@@ -20,7 +20,8 @@ var scoreboard;
 var powerupCount = 0;
 var peopleCount = 0;
 var score = 0;
-
+var DataBase =  require('../utils/storage');
+var db;       
 function randomInt(max) {
     return Math.floor(Math.random() * max);
     return rdg.integerInRange(0, max);
@@ -222,7 +223,7 @@ var hunt =  function huntingSeason (badguy) {
 
 module.exports = {
     create: function(){
-
+        db = new DataBase();
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
         game.stage.backgroundColor = '#cccccc';
@@ -380,9 +381,10 @@ module.exports = {
         }, null, this);
 
         scoreboard.text = score.toString();
-        if(powerupCount === 0 && peopleCount === 0) {
+        if (powerupCount === 0 && peopleCount === 0) {
             console.log(game.globals.LEVELNUMBER);
             game.globals.LEVELNUMBER++;
+            db.saveLevel(game.globals.LEVELNUMBER);
             game.globals.LEVEL = 'level-'+game.globals.LEVELNUMBER;
             game.state.start(game.globals.LEVEL);
         }
