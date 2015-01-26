@@ -85,15 +85,9 @@ var moveToPoint = function (actor, target) {
     var actX = (actor.x/game.globals.TILE_SIZE).toFixed();
     var actY = (actor.y/game.globals.TILE_SIZE).toFixed();
 
-    var move = game.add.tween(actor);
-    var targetDirection = {
-        x: (actX + target.x) * game.globals.TILE_SIZE,
-        y: (actY + target.y) * game.globals.TILE_SIZE 
-    };
+    findPathTo(actor, actX, actY, target.x, target.y);
+ 
 
-    move.to(targetDirection, 300, Phaser.Easing.Linear.None);
-    actor.activeTween = move;
-    actor.activeTween.start(); 
 
 }
 var findPathTo =  function pathTastic (actor, startx, starty, tilex, tiley) { 
@@ -120,9 +114,9 @@ var findPathTo =  function pathTastic (actor, startx, starty, tilex, tiley) {
         actor.activeTween.start(); 
  
     });
-    //console.log([startx, starty], [tilex, tiley])
-    pathfinder.preparePathCalculation([Number(startx) , Number(starty)], [Number(tilex) ,Number(tiley)]);
+    
     try {
+        pathfinder.preparePathCalculation([Number(startx) , Number(starty)], [Number(tilex) ,Number(tiley)]);
         pathfinder.calculatePath();
     } catch (e) {
         console.log('error');
@@ -139,10 +133,7 @@ var isClose = function (point1, point2) {
     var point2Y = (point2.y/game.globals.TILE_SIZE).toFixed();
 
     var diffX = Math.abs(point1X - point2X);
-    var diffY = Math.abs(point1Y - point2Y);
-    //console.log(diffY);
-    //console.log(diffX);
-    //console.log((diffY < 6) && (diffX < 6))
+    var diffY = Math.abs(point1Y - point2Y); 
     return (diffY < 6) && (diffX < 6);
 };
 
@@ -151,29 +142,46 @@ var canGo = function (actor, dir) {
             actor.x+dir.x <= game.globals.WIDTH - 1 &&
             actor.y+dir.y >= 0 &&
             actor.y+dir.y <= game.globals.HEIGHT - 1 &&
-            map[actor.y+dir.y][actor.x +dir.x] == '.';
+            map[actor.y+dir.y][actor.x +dir.x] != '#';
 }
 
 var isClearSpot = function (spot) {
-    if( map === 'undefined') return false;
-    //console.log(spot);
-    //console.log(map);
-    return map[spot.x][spot.y] === '.';
+    if(spot.x >= game.globals.WIDTH || spot.y >= game.globals.HEIGHT) {
+        return false;
+    }
+    if( !map  ) { 
+        return false;
+    }
+    if (!map[spot.x] ) { 
+        return false
+    }
+    if(!map[spot.x][spot.y] ) { 
+        return false;
+    }
+    return map[spot.x][spot.y] != '#';
 };
-var getRandomSpot = function () {
+var getRandomSpot = function (x,y) { 
+    var xN = Number(x);
+    var yN = Number(y);
+    var RANGE = 5;
     return {
-        x:game.rnd.integerInRange(0, game.globals.HEIGHT-1),
-        y:game.rnd.integerInRange(0, game.globals.WIDTH-1)
+        x:game.rnd.integerInRange(Number(xN - RANGE), Number(xN + RANGE)),
+        y:game.rnd.integerInRange(Number(yN - RANGE), Number(yN + RANGE))
     };
 };
 
-var getOpenSpot = function () {
+var getOpenSpot = function (actor) {
 
-    var spot = getRandomSpot();
-    if(isClearSpot(spot)) {
+    var actX = (actor.x/game.globals.TILE_SIZE).toFixed();
+    var actY = (actor.y/game.globals.TILE_SIZE).toFixed();
+
+    var spot = getRandomSpot(actX, actY);
+    
+    console.log(spot);
+    if (isClearSpot(spot)) {
         return spot;
     }
-    //getOpenSpot();
+    //return getOpenSpot(actor);
 }
 
 
@@ -193,32 +201,10 @@ var hunt =  function huntingSeason (badguy) {
     if (isClose(badguy, player.sprite)){
         moveTo(badguy, player.sprite);
     } else {
-
-        //moveTo(badguy, {x: badguy.x+32, y:badguy.y+32} );//random number
-        var spot = getOpenSpot();
-        if(spot == null) return;
-        moveToPoint(badguy, spot);
-        return;
-        if (diffX > diffY) {
-            if (diffX < 0) {
-                // left
-                moveToPoint(badguy, directions[0]);
-            } else {
-                // right
-                moveToPoint(badguy, directions[1]);
-            }
-        } else {
-            if (diffY < 0) {
-                // up
-                moveToPoint(badguy, directions[2]);
-            } else {
-                // down
-                moveToPoint(badguy, directions[3]);
-            }
-        }
+        var spot = getOpenSpot(badguy);
+        if (spot == null) return;
+        moveToPoint(badguy, spot); 
     }
- 
- 
 }
 
 module.exports = {
@@ -332,7 +318,7 @@ module.exports = {
         console.log(scoreboard);
         badguyBag.forEach(function (bad, index) {
 
-            game.time.events.loop(Phaser.Timer.SECOND, function () {
+            game.time.events.loop(2000, function () {
                 hunt(bad);
             }, this);
         }); 
@@ -388,40 +374,8 @@ module.exports = {
             game.globals.LEVEL = 'level-'+game.globals.LEVELNUMBER;
             game.state.start(game.globals.LEVEL);
         }
-        if ((throttle % 100) === 0 ) {
-            badguyBag.forEach(function (bad, index){
-                if((index % 2) === 0) {
-                    hunt(bad);
-                }
-            }); 
-        }
-        if ((throttle % 135) === 0 ) {
-            badguyBag.forEach(function (bad, index) {
-                if((index % 2) !== 0) {
-                    hunt(bad);
-                }
-            });
-        }
-        /*
-        if ((throttle % 140) === 0 ) {
-            hunt(badguyBag[2]); 
-        }
-        if ((throttle % 160) === 0 ) {
-            hunt(badguyBag[3]); 
-        }
-        if ((throttle % 180) === 0 ) {
-            hunt(badguyBag[4]); 
-        }
-        if ((throttle % 230) === 0 ) {
-            hunt(badguyBag[5]); 
-        }
-        if ((throttle % 250) === 0 ) {
-            hunt(badguyBag[6]); 
-        }
-        if ((throttle % 270) === 0 ) {
-            hunt(badguyBag[7]); 
-        }
-        */
+ 
+
         player.update();
         throttle++;
     },
