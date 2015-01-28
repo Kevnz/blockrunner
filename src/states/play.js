@@ -318,7 +318,7 @@ module.exports = {
         console.log(scoreboard);
         badguyBag.forEach(function (bad, index) {
 
-            game.time.events.loop(2000, function () {
+            game.time.events.loop(800, function () {
                 hunt(bad);
             }, this);
         }); 
