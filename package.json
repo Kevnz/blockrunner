@@ -10,6 +10,7 @@
     "beefy": "~2.1.1",
     "browserify": "~7.0.0",
     "browserify-fs": "^1.0.0",
+    "depot": "^0.1.6",
     "eventemitter2": "^0.4.14",
     "minimongo": "^3.2.5",
     "mixin-object": "^0.1.1",
