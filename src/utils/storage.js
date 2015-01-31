@@ -1,32 +1,49 @@
+//var depot = require('depot');
  
-var minimongo = require("minimongo");
-var IndexedDb = minimongo.IndexedDb; 
-var LocalDb = minimongo.LocalStorageDb; 
 var self;
 
-var DataBase = function () {
+var DataBase = function (collection) {
 	self=this;
-	this.db = new LocalDb({ namespace: "game" });
 
-	if (!this.db.levels) {
-		this.db.addCollection('levels');
-		this.db.levels.upsert({level:1});
-	}
-
+	this.db = depot(collection);
+	console.log(this.db);
 
 
 }
 
 DataBase.prototype.getAllLevelsCleared = function (callback) {
-	console.log(this.db);
+	var self = this;
+	var defaultLevel = {level:1, unlocked:Date.now()};
+	var levels = this.db.all();
 
+	console.log(levels);
 
-	return this.db.levels.find({},{});
+	if (levels.length === 0) {
+		this.db.save(defaultLevel);
+		levels.push(defaultLevel);
+	}
+
+	return levels;
+ 
 };
 
 DataBase.prototype.saveLevel = function(level) {
 	
-	this.db.levels.upsert({level:level});
+	this.db.save({level:level, unlocked:Date.now()});
+};
+
+DataBase.prototype.getTopScores = function () {
+	var scores = this.db.all();
+
+	scores.sort(function (score1, score2) {
+		return score1.score >= score2.score ? 1: -1;
+	});
+
+	return scores.slice(0,9);
+}
+
+DataBase.prototype.saveScore = function (score) {
+	this.db.save({score:score, recorded:Date.now()});
 };
 
 module.exports = DataBase;
