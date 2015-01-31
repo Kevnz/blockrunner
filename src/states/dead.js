@@ -7,7 +7,7 @@ module.exports = {
     },
 
     create: function () { 
-        game.add.bitmapText(x, y, 'bits-1','You Died - The End'32);
+        game.add.bitmapText(25, 85, 'bits-1', 'You Died - The End', 32);
     },
     update:function () {
 
