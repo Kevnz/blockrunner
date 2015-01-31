@@ -4,11 +4,11 @@ var half_button_height = 32;
 var actionOnClick = function (levelButton) {
     console.log(levelButton.levelSelect);
     var levelNumber = levelButton.text.split(' ')[1];
-    var level = levels.filter(function(item) {
+    var level = levels.filter(function (item) {
         console.log(item);
         return  levelNumber == item.level;
     });
-    if(level.length === 0)return;
+    if(level.length === 0) return;
 	console.log(level);
     console.log(levelButton);
     console.log(levelButton.text);
@@ -46,14 +46,9 @@ module.exports = {
 
     	//button = game.add.button(half_button_width, (game.world.centerY - half_button_height), 'button', actionOnClick, this, 1, 0, 2);
         var DataBase = require('../utils/storage');
-        var db = new DataBase();
-
-        console.log(db);
-        db.getAllLevelsCleared().fetch(function (clearedLevels) {
-            console.log(clearedLevels)
-
-            levels = clearedLevels;
-        });
+        var db = new DataBase('levels');
+ 
+        levels = db.getAllLevelsCleared();
         console.log(levels)
         addLevelButton('1',32,16);
         addLevelButton('2',32*6,16);
