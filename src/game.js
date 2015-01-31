@@ -28,4 +28,5 @@ game.state.add('dead', require('./states/dead.js'));
 game.state.add('load', require('./states/load.js'));
 game.state.add('menu', require('./states/menu.js'));
 game.state.add('boot', require('./states/boot.js'));
+game.state.add('intro', require('./states/intro.js'));
 game.state.start('boot');
