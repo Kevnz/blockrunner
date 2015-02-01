@@ -5,7 +5,8 @@
   "scripts": {
     "start": "beefy src/game.js:bundle.js --live --open",
     "bundle": "browserify src/game.js -o bundle.js ",
-    "deploy": "gulp deploy"
+    "deploy": "gulp deploy",
+    "build": "gulp build"
   },
   "dependencies": {
     "beefy": "~2.1.1",
