@@ -4,7 +4,8 @@
   "description": "A template to get you started using Phaser with Browserify!",
   "scripts": {
     "start": "beefy src/game.js:bundle.js --live --open",
-    "bundle": "browserify src/game.js -o bundle.js "
+    "bundle": "browserify src/game.js -o bundle.js ",
+    "deploy": "gulp deploy"
   },
   "dependencies": {
     "beefy": "~2.1.1",
