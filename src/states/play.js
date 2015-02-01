@@ -121,6 +121,7 @@ var findPathTo =  function pathTastic (actor, startx, starty, tilex, tiley) {
         pathfinder.calculatePath();
     } catch (e) {
         console.log('error');
+        actor.tint =  Math.random() * 0xffffff;
         //console.log(e);
     }
     
@@ -164,7 +165,7 @@ var isClearSpot = function (spot) {
 var getRandomSpot = function (x,y) { 
     var xN = Number(x);
     var yN = Number(y);
-    var RANGE = 5;
+    var RANGE = 3;
     return {
         x:game.rnd.integerInRange(Number(xN - RANGE), Number(xN + RANGE)),
         y:game.rnd.integerInRange(Number(yN - RANGE), Number(yN + RANGE))
@@ -182,7 +183,8 @@ var getOpenSpot = function (actor) {
     if (isClearSpot(spot)) {
         return spot;
     }
-    //return getOpenSpot(actor);
+    return false;
+    //hunt(actor);
 }
 
 
