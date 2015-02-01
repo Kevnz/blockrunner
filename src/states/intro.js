@@ -13,12 +13,9 @@ module.exports = {
 
         intro.x = game.world.centerX - width/2;
         intro.y = game.world.centerY - height/2;
-        
-
-        
   		game.time.events.loop(Phaser.Timer.SECOND/3, function () {
   			intro.tint =  Math.random() * 0xffffff;
-  		} , this);
+  		}, this);
         game.time.events.add(Phaser.Timer.SECOND * 4, function () {
 			game.state.start('load');
         }, this);
