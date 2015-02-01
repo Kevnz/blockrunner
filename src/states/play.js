@@ -381,7 +381,7 @@ module.exports = {
             game.globals.LEVELNUMBER++;
             db.saveLevel(game.globals.LEVELNUMBER);
             game.globals.LEVEL = 'level-'+game.globals.LEVELNUMBER;
-            game.state.start(game.globals.LEVEL);
+            game.state.start('transition');
         }
  
 
