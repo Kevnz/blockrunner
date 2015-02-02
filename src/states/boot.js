@@ -13,6 +13,7 @@ module.exports = {
     },
 
     create: function () {
+        game.stage.backgroundColor = '#cccccc';
         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         game.state.start('intro');
     }
