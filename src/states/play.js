@@ -22,7 +22,8 @@ var peopleCount = 0;
 var score = 0;
 var DataBase =  require('../utils/storage');
 var db; 
-var scoreDB;      
+var scoreDB;
+
 function randomInt(max) {
     return Math.floor(Math.random() * max);
     return rdg.integerInRange(0, max);
@@ -85,13 +86,14 @@ var moveTo = function (actor, target) {
 var moveToPoint = function (actor, target) {
     var actX = (actor.x/game.globals.TILE_SIZE).toFixed();
     var actY = (actor.y/game.globals.TILE_SIZE).toFixed();
-
+    console.log(arguments);
     findPathTo(actor, actX, actY, target.x, target.y);
  
 
 
 }
 var findPathTo =  function pathTastic (actor, startx, starty, tilex, tiley) { 
+    console.log(arguments);
     pathfinder.setCallbackFunction(function(path) {
         path = path || []; 
 
@@ -115,14 +117,16 @@ var findPathTo =  function pathTastic (actor, startx, starty, tilex, tiley) {
         actor.activeTween.start(); 
  
     });
-    
+    var startCalcs = [Number(startx) , Number(starty)],  endCalcs = [Number(tilex) , Number(tiley)];
     try {
-        pathfinder.preparePathCalculation([Number(startx) , Number(starty)], [Number(tilex) ,Number(tiley)]);
+        pathfinder.preparePathCalculation(startCalcs, endCalcs);
         pathfinder.calculatePath();
     } catch (e) {
         console.log('error');
         actor.tint =  Math.random() * 0xffffff;
         //console.log(e);
+        //console.log(startCalcs);
+        //console.log(endCalcs);
     }
     
 };
@@ -165,11 +169,17 @@ var isClearSpot = function (spot) {
 var getRandomSpot = function (x,y) { 
     var xN = Number(x);
     var yN = Number(y);
-    var RANGE = 3;
-    return {
-        x:game.rnd.integerInRange(Number(xN - RANGE), Number(xN + RANGE)),
-        y:game.rnd.integerInRange(Number(yN - RANGE), Number(yN + RANGE))
+    var RANGE = 5;
+    var minX = xN - RANGE < 1 ? 2 : xN - RANGE;
+    var maxX = xN + RANGE > 30 ? 30 :  xN + RANGE;
+    var minY = yN - RANGE < 1 ? 2 : yN - RANGE;
+    var maxY = yN + RANGE > 14 ? 14 :  yN + RANGE;
+    var obj = {
+        x:game.rnd.integerInRange(minX, maxX),
+        y:game.rnd.integerInRange(minY, maxY)
     };
+    console.log(obj);
+    return obj;
 };
 
 var getOpenSpot = function (actor) {
@@ -205,19 +215,30 @@ var hunt =  function huntingSeason (badguy) {
         moveTo(badguy, player.sprite);
     } else {
         var spot = getOpenSpot(badguy);
-        if (spot == null) return;
+        //this is fugly
+        if (spot === false) {
+            spot = getOpenSpot(badguy);
+        }
+        if (spot === false) {
+            spot = getOpenSpot(badguy);
+        }
+        if (spot === false) {
+            spot = getOpenSpot(badguy);
+        }
+        if (spot === false) {
+            return;
+        }
         moveToPoint(badguy, spot); 
     }
 }
 
 module.exports = {
     create: function(){
+        mixpanel.track("Level played");
         db = new DataBase('levels');
         scoreDB = new DataBase('scores');
 
         game.physics.startSystem(Phaser.Physics.ARCADE);
-
-        game.stage.backgroundColor = '#cccccc';
 
         blocks = game.add.group();
         blocks.enableBody = true;
@@ -381,6 +402,7 @@ module.exports = {
             game.globals.LEVELNUMBER++;
             db.saveLevel(game.globals.LEVELNUMBER);
             game.globals.LEVEL = 'level-'+game.globals.LEVELNUMBER;
+            mixpanel.track("Level cleared");
             game.state.start('transition');
         }
  
