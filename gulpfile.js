@@ -30,7 +30,7 @@ var result = browserify({
 			.pipe(gulp.dest('./'));
 });
 gulp.task('assets',  function () {
-	return gulp.src('assets/*')
+	return gulp.src('assets/**')
     .pipe(gulp.dest('dist/assets/'));
 });
 gulp.task('levels',  function () {
@@ -41,11 +41,16 @@ gulp.task('plugins',  function () {
 	return gulp.src('plugins/*')
     .pipe(gulp.dest('dist/plugins/'));
 });
+///node_modules/depot/depot.js"
+gulp.task('depot',  function () {
+	return gulp.src('./node_modules/depot/depot.js')
+    .pipe(gulp.dest('dist/node_modules/depot/depot.js'));
+});
 gulp.task('phaser',  function () {
 	return gulp.src('./node_modules/phaser/build/phaser.js')
     .pipe(gulp.dest('dist/node_modules/phaser/build/'));
 });
-gulp.task('dist', ['build','assets','levels','plugins','phaser'], function () {
+gulp.task('dist', ['build','assets','levels','plugins','phaser','depot'], function () {
 	return gulp.src(['./*.png', './bundle.js', './index.html', './gamecontroller.js'])
     .pipe(gulp.dest('dist'));
 });
