@@ -4,9 +4,12 @@ var deploy = require('gulp-gh-pages');
 
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
+var del = require('del');
+var vinylPaths = require('vinyl-paths');
+
 
 gulp.task('build', function () {
-var result = browserify({
+	var result = browserify({
 				entries:['./src/game.js']
 			}).on('error', function () {
 				console.log('There was an error');
@@ -53,9 +56,9 @@ gulp.task('phaser',  function () {
 gulp.task('dist', ['build','assets','levels','plugins','phaser','depot'], function () {
 	return gulp.src(['./*.png', './bundle.js', './index.html', './gamecontroller.js'])
     .pipe(gulp.dest('dist'));
-});
-
+}); 
 gulp.task('deploy', ['dist'], function () {
     return gulp.src('./dist/**/*')
-        .pipe(deploy());
+        .pipe(deploy())
+        .pipe(vinylPaths(del));;
 });
