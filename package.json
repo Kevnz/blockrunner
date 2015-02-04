@@ -18,6 +18,7 @@
     "minimongo": "^3.2.5",
     "mixin-object": "^0.1.1",
     "phaser": "~2.2.1",
+    "run-sequence": "^1.0.2",
     "treo": "^0.4.1",
     "vinyl-paths": "^1.0.0"
   },
