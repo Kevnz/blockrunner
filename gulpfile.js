@@ -49,7 +49,7 @@ gulp.task('plugins',  function () {
 ///node_modules/depot/depot.js"
 gulp.task('depot',  function () {
 	return gulp.src('./node_modules/depot/depot.js')
-    .pipe(gulp.dest('dist/node_modules/depot/depot.js'));
+    .pipe(gulp.dest('dist/node_modules/depot/'));
 });
 gulp.task('phaser',  function () {
 	return gulp.src('./node_modules/phaser/build/phaser.js')
