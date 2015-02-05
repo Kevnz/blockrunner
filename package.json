@@ -12,12 +12,15 @@
     "beefy": "~2.1.1",
     "browserify": "~7.0.0",
     "browserify-fs": "^1.0.0",
+    "del": "^1.1.1",
     "depot": "^0.1.6",
     "eventemitter2": "^0.4.14",
     "minimongo": "^3.2.5",
     "mixin-object": "^0.1.1",
     "phaser": "~2.2.1",
-    "treo": "^0.4.1"
+    "run-sequence": "^1.0.2",
+    "treo": "^0.4.1",
+    "vinyl-paths": "^1.0.0"
   },
   "devDependencies": {
     "gulp": "3.8.8",
