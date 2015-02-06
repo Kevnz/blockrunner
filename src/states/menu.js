@@ -47,8 +47,13 @@ module.exports = {
     	//button = game.add.button(half_button_width, (game.world.centerY - half_button_height), 'button', actionOnClick, this, 1, 0, 2);
         var DataBase = require('../utils/storage');
         var db = new DataBase('levels');
- 
+        db.saveLevel(2);
+        db.saveLevel(3);
+        db.saveLevel(4);
+        db.saveLevel(5);
+        db.saveLevel(6);
         levels = db.getAllLevelsCleared();
+
         console.log(levels)
         addLevelButton('1',32,16);
         addLevelButton('2',32*6,16);
