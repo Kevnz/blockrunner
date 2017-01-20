@@ -20,19 +20,19 @@ gulp.task('build', function () {
       })
 
   return result
-      .bundle(function (err,buf){
-        if (err){
-          console.log('Bundle failure');
-          console.log(err);
-        }
-      })
-      .on('error', function () {
-        console.log('There was an error');
-        console.log(arguments);
-        this.emit('end');
-      })
-      .pipe(source('bundle.js'))
-      .pipe(gulp.dest('./'));
+    .bundle(function (err,buf){
+      if (err){
+        console.log('Bundle failure');
+        console.log(err);
+      }
+    })
+    .on('error', function () {
+      console.log('There was an error');
+      console.log(arguments);
+      this.emit('end');
+    })
+    .pipe(source('bundle.js'))
+    .pipe(gulp.dest('./'));
 });
 gulp.task('assets',  function () {
   return gulp.src(['assets/**/*'])
