@@ -9,7 +9,6 @@ var vinylPaths = require('vinyl-paths');
 
 var runSequence = require('run-sequence');
 
-
 gulp.task('build', function () {
   var result = browserify({
         entries:['./src/game.js']

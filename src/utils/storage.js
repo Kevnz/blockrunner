@@ -1,4 +1,4 @@
-var depot = require('depot');
+var depot = require('depotjs');
 
 var self;
 
