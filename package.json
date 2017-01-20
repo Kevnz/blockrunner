@@ -1,7 +1,7 @@
 {
   "name": "browserify-phaser",
   "version": "0.1.0",
-  "description": "A template to get you started using Phaser with Browserify!",
+  "description": "Save the people!",
   "scripts": {
     "start": "beefy src/game.js:bundle.js --live --open",
     "bundle": "browserify src/game.js -o bundle.js ",
@@ -29,18 +29,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/OttoRobba/browserify-phaser.git"
+    "url": "https://github.com/Kevnz/blockrunner.git"
   },
   "keywords": [
     "phaser",
-    "template",
-    "game",
-    "template",
-    "browserify"
+    "game"
   ],
-  "author": "OttoRobba",
+  "author": "Kevin Isom",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/OttoRobba/browserify-phaser/issues"
+    "url": "https://github.com/Kevnz/blockrunner/issues"
   }
 }
