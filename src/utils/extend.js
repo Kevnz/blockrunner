@@ -1,65 +1,64 @@
 var _build = function(name, main, extensions) {
-            
-        var build = _build,
+  var build = _build,
 
-            builtClass = build._ctor(main, cfg),
-            buildCfg = build._cfg(main, cfg, extensions),
+    builtClass = build._ctor(main, cfg),
+    buildCfg = build._cfg(main, cfg, extensions),
 
-            _mixCust = build._mixCust,
+    _mixCust = build._mixCust,
 
-            dynamic = builtClass._yuibuild.dynamic,
+    dynamic = builtClass._yuibuild.dynamic,
 
-            i, l, extClass, extProto,
-            initializer,
-            destructor;
+    i, l, extClass, extProto,
+    initializer,
+    destructor;
 
-        // Augment/Aggregate
-        for (i = 0, l = extensions.length; i < l; i++) {
-            extClass = extensions[i];
+  // Augment/Aggregate
+  for (i = 0, l = extensions.length; i < l; i++) {
+    extClass = extensions[i];
 
-            extProto = extClass.prototype;
+    extProto = extClass.prototype;
 
-            initializer = extProto[INITIALIZER];
-            destructor = extProto[DESTRUCTOR];
-            delete extProto[INITIALIZER];
-            delete extProto[DESTRUCTOR];
+    initializer = extProto[INITIALIZER];
+    destructor = extProto[DESTRUCTOR];
+    delete extProto[INITIALIZER];
+    delete extProto[DESTRUCTOR];
 
-            // Prototype, old non-displacing augment
-            Y.mix(builtClass, extClass, true, null, 1);
+    // Prototype, old non-displacing augment
+    Y.mix(builtClass, extClass, true, null, 1);
 
-            // Custom Statics
-            _mixCust(builtClass, extClass, buildCfg);
+    // Custom Statics
+    _mixCust(builtClass, extClass, buildCfg);
 
-            if (initializer) {
-                extProto[INITIALIZER] = initializer;
-            }
+    if (initializer) {
+      extProto[INITIALIZER] = initializer;
+    }
 
-            if (destructor) {
-                extProto[DESTRUCTOR] = destructor;
-            }
+    if (destructor) {
+      extProto[DESTRUCTOR] = destructor;
+    }
 
-            builtClass._yuibuild.exts.push(extClass);
-        }
+    builtClass._yuibuild.exts.push(extClass);
+  }
 
-        if (px) {
-            Y.mix(builtClass.prototype, px, true);
-        }
+  if (px) {
+    Y.mix(builtClass.prototype, px, true);
+  }
 
-        if (sx) {
-            Y.mix(builtClass, build._clean(sx, buildCfg), true);
-            _mixCust(builtClass, sx, buildCfg);
-        }
+  if (sx) {
+    Y.mix(builtClass, build._clean(sx, buildCfg), true);
+    _mixCust(builtClass, sx, buildCfg);
+  }
 
-        builtClass.prototype.hasImpl = build._impl;
+  builtClass.prototype.hasImpl = build._impl;
 
-        if (dynamic) {
-            builtClass.NAME = name;
-            builtClass.prototype.constructor = builtClass;
+  if (dynamic) {
+    builtClass.NAME = name;
+    builtClass.prototype.constructor = builtClass;
 
-            // Carry along the reference to `modifyAttrs()` from `main`.
-            builtClass.modifyAttrs = main.modifyAttrs;
-        }
+    // Carry along the reference to `modifyAttrs()` from `main`.
+    builtClass.modifyAttrs = main.modifyAttrs;
+  }
 
-        return builtClass;
-    };
+  return builtClass;
+};
 module.exports = _build;

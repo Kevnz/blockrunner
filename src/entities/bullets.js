@@ -1,11 +1,11 @@
 
 
 module.exports = {
-	init: function () {
+  init: function () {
 
-	},
-	
-	fire: function (dir, speed) {
+  },
 
-	}
+  fire: function (dir, speed) {
+
+  }
 };
