@@ -43,10 +43,10 @@ module.exports = {
   create: function(){
   //This is just like any other Phaser create function
   //game.state.start('play');
-
     //button = game.add.button(half_button_width, (game.world.centerY - half_button_height), 'button', actionOnClick, this, 1, 0, 2);
     var DataBase = require('../utils/storage');
     var db = new DataBase('levels');
+
 
     levels = db.getAllLevelsCleared();
     console.log(levels)
